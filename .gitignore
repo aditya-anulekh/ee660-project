@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# My Files
+.idea
+.vscode
+data/
+scratchpad.ipynb
+dummy.ipynb
+*.csv
