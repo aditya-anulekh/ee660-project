@@ -137,3 +137,4 @@ dummy.ipynb
 *.csv
 plots/
 saved_models/
+test.py

@@ -7,7 +7,7 @@ from sklearn.feature_selection import (
     SelectKBest,
     mutual_info_classif
 )
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import cross_validate, GridSearchCV
 from sklearn.pipeline import Pipeline
 from imblearn.pipeline import Pipeline as imb_pipeline
@@ -30,8 +30,8 @@ def create_pipeline(estimator, sampler=None, **kwargs):
         pipeline_list.append(('sampler', sampler()))
 
     pipeline_list.extend([
-        ('skb', SelectKBest(score_func=mutual_info_classif, k=6)),
-        ('scaler', StandardScaler()),
+        ('skb', SelectKBest(score_func=mutual_info_classif)),
+        ('scaler', MinMaxScaler),
         ('estimator', estimator())
     ])
 
@@ -63,7 +63,7 @@ def grid_search(model, X_train, y_train, sampler=None, save=False):
     # Pickle the model
     if save:
         save_model(clf.best_estimator_,
-                   filename=f"{model.__name__}_{sampler.__name__ if sampler is not None else None}")
+                   filename=f"{model.__name__}_{sampler.__name__ if sampler is not None else None}.pkl")
 
     return clf.best_estimator_, clf.best_params_
 
