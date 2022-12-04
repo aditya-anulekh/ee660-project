@@ -135,3 +135,5 @@ data/
 scratchpad.ipynb
 dummy.ipynb
 *.csv
+plots/
+saved_models/

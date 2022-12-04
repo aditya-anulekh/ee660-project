@@ -5,8 +5,16 @@ from sklearn.preprocessing import (
     LabelEncoder,
     StandardScaler,
 )
+from sklearn.feature_selection import (
+    SelectKBest,
+    mutual_info_classif
+)
 from sklearn.model_selection import (
     train_test_split
+)
+from sklearn.metrics import (
+    roc_auc_score,
+    accuracy_score,
 )
 import config
 
@@ -38,6 +46,21 @@ class Preprocessing:
         return dataframe, ss
 
 
+def get_data(data_file, columns=None):
+    data = pd.read_csv(data_file, names=columns)
+
+    # Convert labels to 0 and 1
+    data = Preprocessing.encode_labels(data, 'class')
+    data.drop('class', axis=1, inplace=True)
+    X, y = data.drop('class_encoded', axis=1), data['class_encoded']
+
+    # Split data into training and testing
+    X_train, X_test, y_train, y_test = train_test_split(X, y,
+                                                        stratify=y,
+                                                        random_state=config.RANDOM_STATE)
+    return X_train, X_test, y_train, y_test
+
+
 def create_ssl_dataset(X, y, keep_labels=0.2):
     # Use sklearn.model_selection.train_test_split to split labeled data
     # Set stratify attribute of train_test_split to perform stratified sampling
@@ -49,15 +72,11 @@ def create_ssl_dataset(X, y, keep_labels=0.2):
     return X_labeled, y_labeled, X_unlabeled, y_unlabeled
 
 
-def save_model(model, training_mode='sl', filename=None):
-    # Infer filename if not provided
-    if filename is None:
-        filename = os.path.join(
-            config.MODELS_DIR,
-            f"{model.__name__}_{training_mode}.pkl"
-        )
+def get_model_metrics(model, X_test, y_test):
+    metrics = {}
+    scores = [roc_auc_score, accuracy_score]
+    for score in scores:
+        y_pred = model.predict(X_test)
+        metrics.__setitem__(score.__name__, score(y_test, y_pred))
+    return metrics
 
-    # Write the file using pickle
-    with open(filename, 'w') as f:
-        pickle.dump(model, f)
-    return
