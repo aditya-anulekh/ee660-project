@@ -5,6 +5,7 @@ DATASET_ROOT = os.path.join(PROJECT_ROOT, 'data')
 MODELS_DIR = os.path.join(PROJECT_ROOT, 'saved_models')
 PLOTS_DIR = os.path.join(PROJECT_ROOT, 'plots')
 RANDOM_STATE = 42
+N_FOLDS = 5
 
 # Project specific config
 FEATURE_NAMES = [

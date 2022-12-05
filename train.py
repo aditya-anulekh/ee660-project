@@ -22,18 +22,24 @@ def dummy(*args, **kwargs):
 warnings.warn = dummy
 
 
-def create_pipeline(estimator, sampler=None, **kwargs):
+def create_pipeline(estimator, sampler=None, feature_selection=True, **kwargs):
     pipeline_list = []
 
     # Add objects to the pipeline
     if sampler is not None:
         pipeline_list.append(('sampler', sampler()))
 
-    pipeline_list.extend([
-        ('skb', SelectKBest(score_func=mutual_info_classif)),
-        ('scaler', MinMaxScaler),
-        ('estimator', estimator())
-    ])
+    if feature_selection:
+        pipeline_list.extend([
+            ('skb', SelectKBest(score_func=mutual_info_classif)),
+            ('scaler', MinMaxScaler()),
+            ('estimator', estimator(**kwargs))
+        ])
+    else:
+        pipeline_list.extend([
+            ('scaler', MinMaxScaler()),
+            ('estimator', estimator(**kwargs))
+        ])
 
     # Create the pipeline
     if sampler is not None:
@@ -52,18 +58,25 @@ def grid_search(model, X_train, y_train, sampler=None, save=False):
         estimator=pipeline,
         param_grid=grid_params.get(model.__name__),
         refit=True,
-        cv=5,
+        cv=config.N_FOLDS,
         scoring='roc_auc',
-        verbose=2
+        verbose=4,
+        n_jobs=-1
     )
 
     # Fit grid search on the training data
     clf.fit(X_train, y_train)
 
+    output_file = 'grid_search_output.txt'
+
     # Pickle the model
     if save:
         save_model(clf.best_estimator_,
                    filename=f"{model.__name__}_{sampler.__name__ if sampler is not None else None}.pkl")
+        with open(output_file, 'a') as f:
+            f.write(f"{model.__name__}_{sampler.__name__ if sampler is not None else None}\n")
+            f.write(str(clf.best_params_))
+            f.write('\n')
 
     return clf.best_estimator_, clf.best_params_
 

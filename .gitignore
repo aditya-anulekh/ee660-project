@@ -138,3 +138,5 @@ dummy.ipynb
 plots/
 saved_models/
 test.py
+*.txt
+todo.py
