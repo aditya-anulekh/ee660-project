@@ -80,7 +80,7 @@ estimators = [
     SVC,
     AdaBoostClassifier,
 ]
-"""
+
 # No sampling
 for estimator in estimators:
     grid_search(estimator, X_train, y_train, save=True)
@@ -114,7 +114,7 @@ for estimator in estimators:
     grid_search(estimator,
                 X_train, y_train,
                 save=True, sampler=SMOTEENN)
-"""
+
 
 # Get Generalization Bounds
 for estimator in estimators:

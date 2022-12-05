@@ -89,7 +89,10 @@ def create_ssl_dataset(X, y, keep_labels=0.2):
     )
     X_train = pd.concat([X_labeled, X_unlabeled]).sort_index()
     y_train = pd.concat([y_labeled, y_trs.replace(y_trs.unique(), -1)]).sort_index()
-    return X_train, y_train
+    y_train.reset_index(inplace=True, drop=True)
+    y_trs = pd.concat([y_labeled, y_trs]).sort_index()
+    y_trs.reset_index(inplace=True, drop=True)
+    return X_train, y_train, X_train, y_trs
 
 
 def get_model_metrics(model, X_test, y_test):
@@ -113,10 +116,11 @@ def get_generalization_bound(parameter_grid: list, dataset_sizes: dict):
     for phase in phases:
         if phase == "val":
             M = len(parameter_grid)
+            print(M)
         else:
             M = 1
         bound = np.sqrt((1/(2 * dataset_sizes[phase])) * np.log(M / delta))
-        bounds.__setitem__(phase, bound)
+        bounds.__setitem__(phase, round(bound, 3))
     return bounds
 
 

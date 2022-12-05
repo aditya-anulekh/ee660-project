@@ -29,7 +29,7 @@ grid_params = {
     'SVC': {
         f'{pipeline_skb}k': range(8, 11),
         f'{pipeline_estimator}C': np.arange(0.1, 1, 0.1),
-        f'{pipeline_estimator}kernel': ['rbf', 'poly']
+        f'{pipeline_estimator}kernel': ['rbf', 'poly', 'linear']
 
     },
     'MLPClassifier': {
