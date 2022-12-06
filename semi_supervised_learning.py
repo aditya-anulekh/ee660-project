@@ -144,6 +144,7 @@ def train_gmm():
 
     train_metrics = get_model_metrics(pipeline, X_trs, y_trs)
     test_metrics = get_model_metrics(pipeline, X_test, y_test)
+    print(train_metrics, test_metrics)
     metric_output = f"{config.MODELS_DIR}/ssl_models/gmm.json"
     with open(metric_output, 'w') as f:
         json.dump({
@@ -184,6 +185,6 @@ if __name__ == '__main__':
     # train_self_learner()
     # train_label_prop()
     # train_label_spreading()
-    # train_gmm()
-    train_ssl_baseline()
+    train_gmm()
+    # train_ssl_baseline()
     pass

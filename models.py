@@ -129,6 +129,7 @@ class GaussianMixtureModel(BaseEstimator):
                 cov=self.cluster_cov[i]
             )
             proba[:, i] = gaussian_pdf.pdf(X)
+        proba = np.multiply(proba, self.weights)
         return np.argmax(proba, axis=1)
 
     def score(self, X, y, metric='roc_auc'):

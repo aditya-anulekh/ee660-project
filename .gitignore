@@ -140,3 +140,4 @@ saved_models/
 test.py
 *.txt
 todo.py
+*.zip
