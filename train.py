@@ -1,14 +1,12 @@
 import os
 import warnings
 import pickle
-import numpy as np
-from utils import get_data, get_model_metrics
 from sklearn.feature_selection import (
     SelectKBest,
     mutual_info_classif
 )
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.model_selection import cross_validate, GridSearchCV
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from imblearn.pipeline import Pipeline as imb_pipeline
 from grid_search_params import grid_params
@@ -98,21 +96,6 @@ def save_model(model, training_mode='sl', filename=None):
     with open(filename, 'wb') as f:
         pickle.dump(model, f)
     return
-
-
-# TODO: Remove this function
-def train_model(model, X_train, y_train,
-                cv=True,
-                save=False):
-    if cv:
-        cv_results = cross_validate(model,
-                                    X_train, y_train,
-                                    return_estimator=True,
-                                    scoring='roc_auc')
-        return cv_results['estimator'][np.argmax(cv_results['test_score'])]
-    else:
-        model.fit(X_train, y_train)
-    return model
 
 
 if __name__ == "__main__":

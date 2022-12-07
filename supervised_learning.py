@@ -47,9 +47,6 @@ from grid_search_params import grid_params
 import config
 
 
-# In[3]:
-
-
 X_train, X_test, y_train, y_test = get_data(
     os.path.join(config.DATASET_ROOT,
                  'magic04.data'),

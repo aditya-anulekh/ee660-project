@@ -135,9 +135,9 @@ data/
 scratchpad.ipynb
 dummy.ipynb
 *.csv
-plots/
-saved_models/
 test.py
 *.txt
 todo.py
 *.zip
+semi_supervised_learning.ipynb
+result_viz.ipynb

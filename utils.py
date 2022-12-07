@@ -1,15 +1,9 @@
 import os
-import pickle
-
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import (
     LabelEncoder,
     StandardScaler,
-)
-from sklearn.feature_selection import (
-    SelectKBest,
-    mutual_info_classif
 )
 from sklearn.model_selection import (
     train_test_split
@@ -88,6 +82,7 @@ def create_ssl_dataset(X, y, keep_labels=0.2):
         stratify=y
     )
     X_train = pd.concat([X_labeled, X_unlabeled]).sort_index()
+    X_train.reset_index(inplace=True, drop=True)
     y_train = pd.concat([y_labeled, y_trs.replace(y_trs.unique(), -1)]).sort_index()
     y_train.reset_index(inplace=True, drop=True)
     y_trs = pd.concat([y_labeled, y_trs]).sort_index()

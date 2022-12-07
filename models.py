@@ -197,7 +197,8 @@ class SelfLearner(BaseEstimator):
 
             iter_count += 1
             pbar.update(1)
-            if iter_count > self.n_iter:
+            if iter_count > self.n_iter or len(drop_idx) == 0:
+                print("Early stopping!")
                 break
         self.fitted = True
         return self
