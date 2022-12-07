@@ -1,4 +1,4 @@
-# EE660 Final Project
+# EE660 Final Project - Group 8
 
 # Reproducing results
 
