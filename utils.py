@@ -125,5 +125,5 @@ if __name__ == '__main__':
                      'magic04.data'),
         columns=config.FEATURE_NAMES
     )
-    X_ssl, y_ssl = create_ssl_dataset(X_train, y_train)
+    X_ssl, y_ssl, X_test, y_test = create_ssl_dataset(X_train, y_train)
 
