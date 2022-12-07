@@ -321,7 +321,7 @@ if __name__ == '__main__':
     parser.add_argument('--final_only', type=bool, default=True)
 
     # Add argument to select training mode
-    parser.add_argument('--training_mode', type=str, default='sl',
+    parser.add_argument('--training_mode', type=str, default='None',
                         help="Select from sl, ssl, both")
 
     # Add argument to select results
@@ -330,7 +330,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    if args.final_only:
+    if args.final_only and args.training_mode == 'None':
         # Results of SL model
         print("*" * 10, "SL Results", "*" * 10)
         print("Using Random Forest with ADASYN Over Sampling")

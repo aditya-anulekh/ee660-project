@@ -14,6 +14,18 @@ python main.py
     * `plots`: Set to True to generate plots for the selected training mode (Default: True)
     * `tables`: Set to True to generate latex formatted tables for the selected training mode (Default: False)
 
+**Note:** To generate results other than those of the final model, please clone this repository by running the following command
+
+```bash
+git clone https://github.com/aditya-anulekh/ee660-project.git
+```
+
+Example command to generate plots for supervised learning
+
+```bash
+python main.py --training_mode sl
+```
+
 
 * Training supervised learning models
 
