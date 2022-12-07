@@ -2,6 +2,12 @@
 
 # Reproducing results
 
+* Install the required packages before running the project
+
+```bash
+pip install -r requirements.txt
+```
+
 * Run the pre-run bash script to create requisite directories and download model files
 
 ```bash

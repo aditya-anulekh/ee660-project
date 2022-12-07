@@ -141,3 +141,4 @@ todo.py
 *.zip
 semi_supervised_learning.ipynb
 result_viz.ipynb
+!requirements.txt
